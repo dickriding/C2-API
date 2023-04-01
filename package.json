@@ -1,0 +1,53 @@
+{
+	"name": "c2-api",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [
+		"express",
+		"typescript",
+		"example"
+	],
+	"author": "Marlboro Net (Tesco)",
+	"license": "Apache-2.0",
+	"main": "lib/app.js",
+	"engines": {
+		"node": ">=8.2"
+	},
+	"scripts": {
+		"build": "npm run lint && npm run clear && tsc && abspath",
+		"build:docker": "npm install && npm run build && npm prune --production && npm run build:docker:raw && npm install",
+		"build:docker:raw": "docker build -t marlboronet-c2-api .",
+		"clear": "del-cli 'lib/*' 'log/*' '!.gitignore'",
+		"lint": "tslint --project tsconfig.json --config tslint.json --format stylish",
+		"start": "cross-env NODE_ENV=production node .",
+		"start:dev": "cross-env NODE_ENV=development NODE_PATH=src nodemon -e ts -w src -x ts-node src/app.ts",
+		"start:docker": "docker run -d -p 3000:3000 marlboronet-c2-api",
+		"test": "cross-env NODE_ENV=test mocha --recursive lib/test"
+	},
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"cross-env": "^5.1.1",
+		"express": "^4.16.2",
+		"morgan": "^1.9.0",
+		"telnetit": "^0.0.1",
+		"winston": "^2.4.0"
+	},
+	"devDependencies": {
+		"@types/body-parser": "^1.16.8",
+		"@types/chai": "^4.0.0",
+		"@types/express": "^4.0.39",
+		"@types/mocha": "^2.2.44",
+		"@types/morgan": "^1.7.35",
+		"@types/node": "^8.0.0",
+		"@types/winston": "^2.3.7",
+		"absolute-path-converter": "^1.0.4",
+		"chai": "^4.0.0",
+		"del-cli": "^1.1.0",
+		"mocha": "^4.0.0",
+		"nodemon": "^1.12.1",
+		"ts-node": "^3.3.0",
+		"tslint": "^5.8.0",
+		"tslint-config-airbnb": "^5.4.0",
+		"typescript": "^2.6.1"
+	}
+}
